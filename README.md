@@ -14,9 +14,9 @@ Questions
 
 # Technical Description
 
-* HTML page
-* .csv file provided by kaggle
+* The format of the final product of this project will be an HTML page hosted on the UW student server.
+* The data that we will be using comes from a .csv file provided by Kaggle.
 * The data has many columns to describe specific situations that are null for most rows, so we will be filtering for these situations when necessary. Some columns store textual descriptions of the events and these strings may be parsed to help filter the rows into new groups.
-*
-* Many of our questions will be answered by comparing analytics on subgroups to the averages of the outgroups or the data as a whole.
+* All of the libraries we will be using in this project to manipulate the data and create our html page have been covered previously in this course.
+* Many of our questions about the data will be answered by comparing analytics on subgroups to the averages of the outgroups or the data as a whole.
 * We anticipate having to read through a lot of the event descriptions before we can figure out an effective way to filter for the events we want. It will also require some effort to do research on political timelines from other sources to correlate events effectively.
