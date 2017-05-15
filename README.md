@@ -19,4 +19,4 @@ Questions
 * The data has many columns to describe specific situations that are null for most rows, so we will be filtering for these situations when necessary. Some columns store textual descriptions of the events and these strings may be parsed to help filter the rows into new groups.
 *
 * Many of our questions will be answered by comparing analytics on subgroups to the averages of the outgroups or the data as a whole.
-* We anticipate having to read through a lot of the event descriptions before we can figure out an effective way to filter for the events we want.
+* We anticipate having to read through a lot of the event descriptions before we can figure out an effective way to filter for the events we want. It will also require some effort to do research on political timelines from other sources to correlate events effectively.
