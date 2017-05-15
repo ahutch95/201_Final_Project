@@ -2,14 +2,14 @@
 
 # Project Description
 
-Our audience includes a wide range of political activists in the United States, particularly readers of The Shock Doctrine by Naomi Klein. Also the many political activists on the global scale who want to limit ties with the United States or limit global trade. These people probably already have some vague notion of how terrorism can be motivated by foreign policy decisions, diplomatic ties and economic pressure, but we want them to know how more precise details about how these events occur.
+In this project, we plan to utilize the START Consortium’s Global Terrorism Database. This dataset contains data that was collected over the years of 1970-2015 by the National Consortium for the Study of Terrorism and Responses to Terrorism led by the University of Maryland. Found on Kaggle.com, this dataset provides statistics on known acts of terrorism around the world. We believe that this data will be most used by those researching terrorism and those in the counter-terrorism field. With the appropriate analysis we hope to find a deeper understanding of terrorism and its impact on citizens. 
 
-For our audience who is unfamiliar with these ideas, we want to illustrate how changes in terrorism can be related to other types of political events.
+For our audience who is unfamiliar with these ideas, we want to illustrate how changes in terrorism can be related to other types of political events. In order to answer these questions, we will employ maps as well as various charts and graphs to help clearly illustrate our findings. 
 
 Questions
 * How did terrorism change after the 2003 invasion of Iraq?
 * How many terrorist attacks targeted government and other public officials in Chile and other latin American countries during the 1970s? How did the type of weapon change before and after events in the 1970s?(The U.S. funded and trained many of these groups)
-* ?
+* How did the rate and level of terrorism change throughout the decades?
 
 
 # Technical Description
