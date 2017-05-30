@@ -48,7 +48,7 @@ shinyUI(navbarPage('Terrorism over Time',
                                 sliderInput("Years", label = h3("Time Range"), sep = "", min = 1970, 
                                             max = 2015, value = c(1970, 2015)),
                                 selectInput("Type", label = h3("Select based on Attack Type, Target, or Weapon Type"), 
-                                            choices = list(( "None", "Target Type", "Attack Type", "Weapon Type")), 
+                                            choices = list( "None", "Target Type", "Attack Type", "Weapon Type"), 
                                             selected = "Target")
                               ),
                               
