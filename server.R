@@ -13,18 +13,18 @@ shinyServer(function(input, output) {
   datasetInput <- reactive({
     years <- input$Years
     switch(input$RegionMap,
-           "Australasia/Oceania" = data <- read.csv("./data/data.Australasia.Oceania.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "Central America" = data <- read.csv("./data/data.Central.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "Central Asia" = data <- read.csv("./data/data.Central.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "East Asia" = data <- read.csv("./data/data.East.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "Eastern Europe" = data <- read.csv("./data/data.Eastern.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "Middle East/North Africa" = data <- read.csv("./data/data.Middle.East.North.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "North America" = data <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE) %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "South America" = data <- read.csv("./data/data.South.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "South Asia" = data <- read.csv("./data/data.South.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "Southeast Asia" = data <- read.csv("./data/data.Southeast.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "Sub-Saharan Africa" = data <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "Western Europe" = data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]))
+           "Australasia/Oceania" = data <- read.csv("./data/data.Australasia.Oceania.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "Central America" = data <- read.csv("./data/data.Central.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "Central Asia" = data <- read.csv("./data/data.Central.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "East Asia" = data <- read.csv("./data/data.East.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "Eastern Europe" = data <- read.csv("./data/data.Eastern.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "Middle East/North Africa" = data <- read.csv("./data/data.Middle.East.North.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "North America" = data <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE) %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "South America" = data <- read.csv("./data/data.South.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "South Asia" = data <- read.csv("./data/data.South.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "Southeast Asia" = data <- read.csv("./data/data.Southeast.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "Sub-Saharan Africa" = data <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+           "Western Europe" = data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]))
   })
   
   #for regions that aren't included in default plotly scopes
