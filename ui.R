@@ -25,7 +25,8 @@ shinyUI(navbarPage('Terrorism over Time',
                               
                               # Main panel: display plotly map
                               mainPanel(
-                                plotlyOutput('map')
+                                plotlyOutput('map'),
+                                textOutput("text")
                               )
                             )
                    ), 
@@ -82,6 +83,7 @@ shinyUI(navbarPage('Terrorism over Time',
                               # Create a main panel, to display plotly Scatter plot
                               mainPanel(
                                 #plotlyOutput('time')
+                                
                               )
                             )
                    )

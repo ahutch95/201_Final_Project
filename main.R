@@ -4,7 +4,7 @@ library(dplyr)
 
 getwd()
 setwd("../final")
-data <- read.csv("./data/globalterrorismdb_0616dist.csv", stringsAsFactors = FALSE)
+data <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE)
 View(data)
 
 data.North.America <- data %>% filter(region == 1)

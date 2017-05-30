@@ -11,19 +11,29 @@ library(plotly)
 shinyServer(function(input, output) { 
   
   datasetInput <- reactive({
+    years <- input$Years
     switch(input$Region,
            "Australasia/Oceania" = data <- read.csv("./data/data.Australasia.Oceania.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "Central America" = data <- read.csv("./data/data.Central.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "Central Asia" = data <- read.csv("./data/data.Central.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "East Asia" = data <- read.csv("./data/data.East.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "Eastern Europe" = data <- read.csv("./data/data.Eastern.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "Middle East/North Africa" = data <- read.csv("./data/data.Middle.East.North.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "North America" = data <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE),
-           "South America" = data <- read.csv("./data/data.South.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "South Asia" = data <- read.csv("./data/data.South.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "Southeast Asia" = data <- read.csv("./data/data.Southeast.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "Sub-Saharan Africa" = data <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
-           "Western Europe" = data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"))
+           "Central America" = data <- read.csv("./data/data.Central.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "Central Asia" = data <- read.csv("./data/data.Central.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "East Asia" = data <- read.csv("./data/data.East.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "Eastern Europe" = data <- read.csv("./data/data.Eastern.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "Middle East/North Africa" = data <- read.csv("./data/data.Middle.East.North.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "North America" = data <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE) %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "South America" = data <- read.csv("./data/data.South.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "South Asia" = data <- read.csv("./data/data.South.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "Southeast Asia" = data <- read.csv("./data/data.Southeast.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "Sub-Saharan Africa" = data <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "Western Europe" = data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]))
+  })
+  
+  #for regions that aren't included in default plotly scopes
+  getLatAndLong <- reactive({
+    switch(input$Region,
+           "Australasia/Oceania" = coords <- data.frame("lon.min" = c(90), "lon.max" = c(180), "lat.min" = c(-60), "lat.max" = c(15)),
+           "Central America" = coords <- data.frame("lon.min" = c(-120), "lon.max" = c(-60), "lat.min" = c(0), "lat.max" = c(45)),
+           "Eastern Europe" = coords <- data.frame("lon.min" = c(0), "lon.max" = c(90), "lat.min" = c(30), "lat.max" = c(75)),
+           "Middle East/North Africa" = coords <- data.frame("lon.min" = c(-15), "lon.max" = c(75), "lat.min" = c(0), "lat.max" = c(75)))
   })
   
   output$map <- renderPlotly({
@@ -33,28 +43,42 @@ shinyServer(function(input, output) {
     type <- input$Type
     if (region == 'North America') {
       scope <- 'north america'
-    } else if (region == 'Central America' | region == 'South America') {
+    } else if (region == 'South America') {
       scope <- 'south america'
-    } else if (region == 'Central Asia' | region == 'South Asia' | region == 'Southeast Asia' | region == 'East Asia' | region == 'Australasia/Oceania') {
+    } else if (region == 'Central Asia' | region == 'South Asia' | region == 'Southeast Asia' | region == 'East Asia') {
       scope <- 'asia'
-    } else if (region == 'Western Europe' | region == 'Eastern Europe') {
+    } else if (region == 'Western Europe') {
       scope <- 'europe'
-    } else if (region == 'Sub-Saharan Africa' | region == 'Middle East/North Africa') {
+    } else if (region == 'Sub-Saharan Africa') {
       scope <- 'africa'
     } else {
       scope <- 'world'
     }
-
-    g <- list(
-      scope = scope,
-      showland = TRUE,
-      landcolor = toRGB("gray85"),
-      subunitwidth = 1,
-      countrywidth = 1,
-      subunitcolor = toRGB("white"),
-      countrycolor = toRGB("white")
-    )
-    
+    if (region == 'Australasia/Oceania' | region == 'Central America' | region == 'Eastern Europe' | region == 'Middle East/North Africa') {
+      coords <- getLatAndLong()
+      g <- list(
+        lonaxis = list(
+          range = c(coords$lon.min, coords$lon.max)),
+        lataxis = list(
+          range = c(coords$lat.min, coords$lat.max)),
+        showland = TRUE,
+        landcolor = toRGB("gray85"),
+        subunitwidth = 1,
+        countrywidth = 1,
+        subunitcolor = toRGB("white"),
+        countrycolor = toRGB("white")
+      )
+    } else {
+      g <- list(
+        scope = scope,
+        showland = TRUE,
+        landcolor = toRGB("gray85"),
+        subunitwidth = 1,
+        countrywidth = 1,
+        subunitcolor = toRGB("white"),
+        countrycolor = toRGB("white")
+      )
+    }
     plot_ly(map.data, lat = map.data$latitude, lon = map.data$longitude, type = 'scattergeo', mode = 'markers') %>% layout(geo = g)
   })
   
@@ -130,5 +154,14 @@ shinyServer(function(input, output) {
     plot
   })
   
+  
+  #code for checking the number of rows in the filtered data
+  output$text <- renderText({
+    coords <- getLatAndLong()
+    coords$lon.min
+    coords$lon.max
+    coords$lat.min
+    coords$lat.max
+  })
   
 })
