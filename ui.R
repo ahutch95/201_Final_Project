@@ -13,12 +13,12 @@ shinyUI(navbarPage('Terrorism over Time',
                               sidebarPanel(
                                 
                                 #Widgets
-                                selectInput("Region", label = h3("Select Region"), 
+                                selectInput("RegionMap", label = h3("Select Region"), 
                                             choices = list("All", "Australasia/Oceania", "Central America", "Central Asia", "East Asia", "Eastern Europe", "Middle East/North Africa", "North America", "South America", "South Asia", "Southeast Asia", "Sub-Saharan Africa", "Western Europe"), 
                                             selected = "All"),
-                                sliderInput("Years", label = h3("Time Range"), sep = "", min = 1970, 
+                                sliderInput("YearsMap", label = h3("Time Range"), sep = "", min = 1970, 
                                             max = 2015, value = c(1970, 2015)),
-                                selectInput("Type", label = h3("Select based on Attack Type, Target, or Weapon Type"), 
+                                selectInput("TypeMap", label = h3("Select based on Attack Type, Target, or Weapon Type"), 
                                             choices = list( "None", "Target Type", "Attack Type", "Weapon Type"),
                                                   selected = "None")
                               ),
@@ -42,14 +42,14 @@ shinyUI(navbarPage('Terrorism over Time',
                               sidebarPanel(
                                 
                                 # Widgets
-                                selectInput("Region", label = h3("Select Region"), 
-                                            choices = list("All", "Australasia/Oceania", "Central America", "Central Asia", "East Asia", "Eastern Europe", "Middle East/North America", "North America", "South America", "South Asia", "Southeast Asia", "Sub-Saharan Africa", "Western Europe"), 
+                                selectInput("RegionPie", label = h3("Select Region"), 
+                                            choices = list("All", "Australasia/Oceania", "Central America", "Central Asia", "East Asia", "Eastern Europe", "Middle East/North Africa", "North America", "South America", "South Asia", "Southeast Asia", "Sub-Saharan Africa", "Western Europe"), 
                                             selected = "All"),
-                                sliderInput("Years", label = h3("Time Range"), sep = "", min = 1970, 
+                                sliderInput("YearsPie", label = h3("Time Range"), sep = "", min = 1970, 
                                             max = 2015, value = c(1970, 2015)),
-                                selectInput("Type", label = h3("Select based on Attack Type, Target, or Weapon Type"), 
+                                selectInput("TypePie", label = h3("Select based on Attack Type, Target, or Weapon Type"), 
                                             choices = list( "None", "Target Type", "Attack Type", "Weapon Type"), 
-                                            selected = "Target")
+                                            selected = "None")
                               ),
                               
                               # Create a main panel, to display plotly pie
@@ -69,12 +69,12 @@ shinyUI(navbarPage('Terrorism over Time',
                               sidebarPanel(
                                 
                                 # Widgets
-                                selectInput("Region", label = h3("Select Region"), 
-                                            choices = list("All", "Australasia/Oceania", "Central America", "Central Asia", "East Asia", "Eastern Europe", "Middle East/North America", "North America", "South America", "South Asia", "Southeast Asia", "Sub-Saharan Africa", "Western Europe"), 
+                                selectInput("RegionTime", label = h3("Select Region"), 
+                                            choices = list("All", "Australasia/Oceania", "Central America", "Central Asia", "East Asia", "Eastern Europe", "Middle East/North Africa", "North America", "South America", "South Asia", "Southeast Asia", "Sub-Saharan Africa", "Western Europe"), 
                                             selected = "All"),
-                                sliderInput("Years", label = h3("Time Range"), sep = "", min = 1970, 
+                                sliderInput("YearsTime", label = h3("Time Range"), sep = "", min = 1970, 
                                             max = 2015, value = c(1970, 2015)),
-                                selectInput("Type", label = h3("Select based on Attack Type, Target, or Weapon Type"), 
+                                selectInput("TypeTime", label = h3("Select based on Attack Type, Target, or Weapon Type"), 
                                             choices = list( "None", "Target Type", "Attack Type", "Weapon Type"), 
                                             selected = "None")
                               ),
