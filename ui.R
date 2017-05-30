@@ -14,7 +14,7 @@ shinyUI(navbarPage('Terrorism over Time',
                                 
                                 #Widgets
                                 selectInput("Region", label = h3("Select Region"), 
-                                            choices = list("All", "Australasia/Oceania", "Central America", "Central Asia", "East Asia", "Eastern Europe", "Middle East/North America", "North America", "South America", "South Asia", "Southeast Asia", "Sub-Saharan Africa", "Western Europe"), 
+                                            choices = list("All", "Australasia/Oceania", "Central America", "Central Asia", "East Asia", "Eastern Europe", "Middle East/North Africa", "North America", "South America", "South Asia", "Southeast Asia", "Sub-Saharan Africa", "Western Europe"), 
                                             selected = "All"),
                                 sliderInput("Years", label = h3("Time Range"), sep = "", min = 1970, 
                                             max = 2015, value = c(1970, 2015)),

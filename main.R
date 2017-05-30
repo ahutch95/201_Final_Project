@@ -3,9 +3,9 @@ library(plotly)
 library(dplyr)
 
 getwd()
-setwd("../final")
-data <- read.csv("./data/globalterrorismdb_0616dist.csv", stringsAsFactors = FALSE)
-View(data)
+setwd("/Users/jaketherrien/Documents/JUNIOR_YEAR/INFO_201/201_Final_Project")
+data.NA <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE)
+View(data.NA)
 
 data.North.America <- data %>% filter(region == 1)
 data.Central.America <- data %>% filter(region == 2)
