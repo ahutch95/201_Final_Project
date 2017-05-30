@@ -76,7 +76,10 @@ shinyUI(navbarPage('Terrorism over Time',
                                 sliderInput("YearsTime", label = h3("Time Range"), sep = "", min = 1970, 
                                             max = 2015, value = c(1970, 2015)),
                                 selectInput("TypeTime", label = h3("Select based on Attack Type, Target, or Weapon Type"), 
-                                            choices = list( "None", "Target Type", "Attack Type", "Weapon Type"), 
+                                            choices = list( "None", 
+                                                            "Target Type" <- list("Business"=1,"Government"=2,"Police"=3,"Military"=4,"Abortion Related"=5, "Airports & Aircraft"=6, "Government(Diplomatic)"=7, "Educational Institution"=8, "Food or Water Supply"=9, "Journalist & Media"=10, "Maritime"=11, "NGO"=12, "Other"=13, "Private Citizens & Property"=14), 
+                                                            "Attack Type" <- list("Assassination"=15, "Armed Assault"=16, "Bombing/Explosion"=17, "Hijacking"=18, "Hostage Taking (Barricade Incident)"=19, "Hostage Taking (Kidnapping)"=20, "Facility/Infrastructure Attack"=21, "Unarmed Assault"=22, "Unknown"=23), 
+                                                            "Weapon Type" <- list("Biological"=24, "Chemical"=25, "Radiological"=26, "Nuclear"=27, "Firearms"=28, "Explosives/Bombs/Dynamite"=29, "Fake Weapons"=30, "Incendiary"=31, "Melee"=32, "Vehicle"=33, "Sabotage Equipment"=34, "Other"=35, "Unknown"=36)), ), 
                                             selected = "None")
                               ),
                               
@@ -90,6 +93,6 @@ shinyUI(navbarPage('Terrorism over Time',
                    
 ))
 
-#list("Business"=1,"Government"=2,"Police"=3,"Military"=4,"Abortion Related"=5, "Airports & Aircraft"=6, "Government(Diplomatic)"=7, "Educational Institution"=8, "Food or Water Supply"=9, "Journalist & Media"=10, "Maritime"=11, "NGO"=12, "Other"=13, "Private Citizens & Property"=14), 
-#list("Assassination"=1, "Armed Assault"=2, "Bombing/Explosion"=3, "Hijacking"=4, "Hostage Taking (Barricade Incident)"=5, "Hostage Taking (Kidnapping)"=6, "Facility/Infrastructure Attack"=7, "Unarmed Assault"=8, "Unknown"=9), 
-#list("Biological"=1, "Chemical"=2, "Radiological"=3, "Nuclear"=4, "Firearms"=5, "Explosives/Bombs/Dynamite"=6, "Fake Weapons"=7, "Incendiary"=8, "Melee"=9, "Vehicle"=10, "Sabotage Equipment"=11, "Other"=12, "Unknown"=13)), 
+#target type <- list("Business"=1,"Government"=2,"Police"=3,"Military"=4,"Abortion Related"=5, "Airports & Aircraft"=6, "Government(Diplomatic)"=7, "Educational Institution"=8, "Food or Water Supply"=9, "Journalist & Media"=10, "Maritime"=11, "NGO"=12, "Other"=13, "Private Citizens & Property"=14), 
+#attack type <- list("Assassination"=15, "Armed Assault"=16, "Bombing/Explosion"=17, "Hijacking"=18, "Hostage Taking (Barricade Incident)"=19, "Hostage Taking (Kidnapping)"=20, "Facility/Infrastructure Attack"=21, "Unarmed Assault"=22, "Unknown"=23), 
+#weapon type <- list("Biological"=24, "Chemical"=25, "Radiological"=26, "Nuclear"=27, "Firearms"=28, "Explosives/Bombs/Dynamite"=29, "Fake Weapons"=30, "Incendiary"=31, "Melee"=32, "Vehicle"=33, "Sabotage Equipment"=34, "Other"=35, "Unknown"=36)), 
