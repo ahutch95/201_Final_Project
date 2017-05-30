@@ -19,7 +19,7 @@ shinyServer(function(input, output) {
            "East Asia" = data <- read.csv("./data/data.East.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
            "Eastern Europe" = data <- read.csv("./data/data.Eastern.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
            "Middle East/North Africa" = data <- read.csv("./data/data.Middle.East.North.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
-           "North America" = data <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE) %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
+           "North America" = data <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE) %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
            "South America" = data <- read.csv("./data/data.South.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
            "South Asia" = data <- read.csv("./data/data.South.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
            "Southeast Asia" = data <- read.csv("./data/data.Southeast.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$YearsMap[1] & iyear < input$YearsMap[2]),
