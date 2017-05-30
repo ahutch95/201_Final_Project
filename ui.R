@@ -5,7 +5,7 @@ library(plotly)
 shinyUI(navbarPage('Terrorism over Time',
                    # tab panel for a map
                    tabPanel('Map',
-                            titlePanel('Tab 1 Title'),
+                            titlePanel('Map of Attacks'),
                             # Create sidebar layout
                             sidebarLayout(
                               
@@ -34,7 +34,7 @@ shinyUI(navbarPage('Terrorism over Time',
                    # tabPanel for a scatter plot
                    tabPanel('Pie Charts',
                             # Add a titlePanel to your tab
-                            titlePanel('Tab 2 Title'),
+                            titlePanel('Pie Chart Breakdown'),
                             
                             # Create a sidebar layout for this tab (page)
                             sidebarLayout(
@@ -61,7 +61,7 @@ shinyUI(navbarPage('Terrorism over Time',
                    ),
                    tabPanel('Time',
                             # Add a titlePanel to your tab
-                            titlePanel('Tab 3 Title'),
+                            titlePanel('Time Chart of Attacks'),
                             
                             # Create a sidebar layout for this tab (page)
                             sidebarLayout(
