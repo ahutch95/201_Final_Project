@@ -1,5 +1,6 @@
 # server.R
 library(dplyr)
+library(plotly)
 
 # Set working directory
 
@@ -56,5 +57,78 @@ shinyServer(function(input, output) {
     
     plot_ly(map.data, lat = map.data$latitude, lon = map.data$longitude, type = 'scattergeo', mode = 'markers') %>% layout(geo = g)
   })
+  
+  output$pies <- renderPlotly({
+    chart.data <- datasetInput()
+    attack.data <- data %>%
+      select(attacktype1_txt) %>%
+      group_by(attacktype1_txt) %>%
+      mutate(count = n()) %>%
+      distinct(attacktype1_txt, count)
+    
+    a <- plot_ly(attack.data, labels = ~attacktype1_txt, values = ~count, type = 'pie', textposition = 'outside',
+            textinfo = 'label+percent', insidetextfont = list(color = '#FFFFFF'),
+            hoverinfo = 'text',
+            text = ~paste(attacktype1_txt, count),
+            marker = list(colors = colors,
+                          line = list(color = '#FFFFFF', width = 1)),
+            #The 'pull' attribute can also be used to create space between the sectors
+            showlegend = FALSE) %>%
+      layout(title = 'Attack Types breakdown',
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+    
+
+    target.data <- data %>%
+      select(targtype1_txt) %>%
+      group_by(targtype1_txt) %>%
+      mutate(count = n()) %>%
+      distinct(targtype1_txt, count)
+    
+    t <- plot_ly(target.data, labels = ~targtype1_txt, values = ~count, type = 'pie', textposition = 'outside',
+                 textinfo = 'label+percent', insidetextfont = list(color = '#FFFFFF'),
+                 hoverinfo = 'text',
+                 text = ~paste(targtype1_txt, count),
+                 marker = list(colors = colors,
+                               line = list(color = '#FFFFFF', width = 1)),
+                 #The 'pull' attribute can also be used to create space between the sectors
+                 showlegend = FALSE) %>%
+      layout(title = 'Target Types breakdown',
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+    
+
+    weapon.data <- data %>%
+      select(weaptype1_txt) %>%
+      group_by(weaptype1_txt) %>%
+      mutate(count = n()) %>%
+      distinct(weaptype1_txt, count)
+    
+    w <- plot_ly(weapon.data, labels = ~weaptype1_txt, values = ~count, type = 'pie', textposition = 'outside',
+                 textinfo = 'label+percent', insidetextfont = list(color = '#FFFFFF'),
+                 hoverinfo = 'text',
+                 text = ~paste(weaptype1_txt, count),
+                 marker = list(colors = colors,
+                               line = list(color = '#FFFFFF', width = 1)),
+                 #The 'pull' attribute can also be used to create space between the sectors
+                 showlegend = FALSE) %>%
+      layout(title = 'Weapon Types breakdown',
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+    
+    category = input$Type
+    plot <- t
+    if (category == "Attack") {
+      plot <- a
+    }
+    if (category == "Target") {
+      plot <- t
+    }
+    if (category == "Weapon") {
+      plot <- w
+    }
+    plot
+  })
+  
   
 })
