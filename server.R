@@ -12,7 +12,7 @@ shinyServer(function(input, output) {
   
   datasetInput <- reactive({
     years <- input$Years
-    switch(input$Region,
+    switch(input$RegionMap,
            "Australasia/Oceania" = data <- read.csv("./data/data.Australasia.Oceania.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8"),
            "Central America" = data <- read.csv("./data/data.Central.America.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
            "Central Asia" = data <- read.csv("./data/data.Central.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8") %>% filter(iyear > input$Years[1] & iyear < input$Years[2]),
@@ -29,7 +29,7 @@ shinyServer(function(input, output) {
   
   #for regions that aren't included in default plotly scopes
   getLatAndLong <- reactive({
-    switch(input$Region,
+    switch(input$RegionMap,
            "Australasia/Oceania" = coords <- data.frame("lon.min" = c(90), "lon.max" = c(180), "lat.min" = c(-60), "lat.max" = c(15)),
            "Central America" = coords <- data.frame("lon.min" = c(-120), "lon.max" = c(-60), "lat.min" = c(0), "lat.max" = c(45)),
            "Eastern Europe" = coords <- data.frame("lon.min" = c(0), "lon.max" = c(90), "lat.min" = c(30), "lat.max" = c(75)),
@@ -38,9 +38,9 @@ shinyServer(function(input, output) {
   
   output$map <- renderPlotly({
     map.data <- datasetInput()
-    region <- input$Region
-    years <- input$Years
-    type <- input$Type
+    region <- input$RegionMap
+    years <- input$YearsMap
+    type <- input$TypeMap
     if (region == 'North America') {
       scope <- 'north america'
     } else if (region == 'South America') {
