@@ -94,7 +94,7 @@ shinyUI(navbarPage('Terrorism over Time',
                               
                               # Create a main panel, to display plotly Scatter plot
                               mainPanel(
-                                #plotlyOutput('time')
+                                plotlyOutput('time')
                                 
                               )
                             )

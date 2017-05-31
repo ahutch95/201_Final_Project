@@ -180,4 +180,30 @@ shinyServer(function(input, output) {
     coords$lat.max
   })
   
+  # code for rendering time series
+  
+  # get dataset based on region
+  datasetInputTime <- reactive({
+    switch(input$RegionTime,
+           "All" = data <- rbind(aus, central.america, central.asia, east.asia, east.europe, middle.east,
+                                 north.america, south.america, south.asia, southeast.asia, africa, western.europe),
+           "Australasia/Oceania" = data <- aus,
+           "Central America" = data <- central.america,
+           "Central Asia" = data <- central.asia,
+           "East Asia" = data <- east.asia,
+           "Eastern Europe" = data <- east.europe,
+           "Middle East/North Africa" = data <- middle.east,
+           "North America" = data <- north.america,
+           "South America" = data <- south.america,
+           "South Asia" = data <- south.asia,
+           "Southeast Asia" = data <- southeast.asia,
+           "Sub-Saharan Africa" = data <- africa,
+           "Western Europe" = data <- western.europe)
+  })
+  
+  # create scatterplot using external function
+  output$time <- renderPlotly({
+    return(BuildTimeSeries(datasetInputTime(), input$RegionTime, input$YearsTime[1], input$YearsTime[2], input$TargetTypeTime, input$AttackTypeTime, input$WeaponTypeTime))
+  })
+  
 })
