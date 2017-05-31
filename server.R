@@ -5,7 +5,7 @@ library(plotly)
 # Set working directory
 
 # Read in data
-
+source(file = './BuildTimeSeries.R')
 
 # Start shinyServer
 shinyServer(function(input, output) { 
