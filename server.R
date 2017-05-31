@@ -24,24 +24,57 @@ shinyServer(function(input, output) {
   africa <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
   western.europe <- data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
   
+  filteredByTarget <- function(data, target.type){
+    if (target.type == 'All') {
+      return(data)
+    } else {
+      filtered.data <- filter(data, targtype1_txt == target.type)
+      return(filtered.data)
+    }
+  }
+    
+  filteredByAttack <- function(data, attack.type){
+    if (attack.type == 'All') {
+      return(data)
+    } else {
+      filtered.data <- filter(data, attacktype1_txt == attack.type)
+      return(filtered.data)
+    }
+  }
+    
+  filteredByWeapon <- function(data, weapon.type){
+    if (weapon.type == 'All') {
+      return(data)
+    } else {
+      filtered.data <- filter(data, weaptype1_txt == weapon.type)
+      return(filtered.data)
+    }
+  }
+  
   datasetInput <- reactive({
-    years <- input$Years
+    attack.type <- input$AttackTypeMap
+    target.type <- input$TargetTypeMap
+    weapon.type <- input$WeaponTypeMap
     switch(input$RegionMap,
-           "All" = data <- rbind(aus, central.america, central.asia, east.asia, east.europe, middle.east, 
-                                 north.america, south.america, south.asia, southeast.asia, africa, western.europe) %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "Australasia/Oceania" = data <- aus %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "Central America" = data <- central.america %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "Central Asia" = data <- central.asia %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "East Asia" = data <- east.asia %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "Eastern Europe" = data <- east.europe %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "Middle East/North Africa" = data <- middle.east %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "North America" = data <- north.america %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "South America" = data <- south.america %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "South Asia" = data <- south.asia %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "Southeast Asia" = data <- southeast.asia %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "Sub-Saharan Africa" = data <- africa %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
-           "Western Europe" = data <- western.europe %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]))
-  })
+             "All" = data <- rbind(aus, central.america, central.asia, east.asia, east.europe, middle.east, 
+                                   north.america, south.america, south.asia, southeast.asia, africa, western.europe) %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "Australasia/Oceania" = data <- aus %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "Central America" = data <- central.america %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "Central Asia" = data <- central.asia %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "East Asia" = data <- east.asia %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "Eastern Europe" = data <- east.europe %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "Middle East/North Africa" = data <- middle.east %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "North America" = data <- north.america %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "South America" = data <- south.america %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "South Asia" = data <- south.asia %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "Southeast Asia" = data <- southeast.asia %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "Sub-Saharan Africa" = data <- africa %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]),
+             "Western Europe" = data <- western.europe %>% filter(iyear >= input$YearsMap[1] & iyear <= input$YearsMap[2]))
+    data.filtered.by.target <- filteredByTarget(data, target.type)
+    data.filtered.by.target.and.attack <- filteredByAttack(data.filtered.by.target, attack.type)
+    data.filtered.by.target.and.attack.and.weapon <- filteredByWeapon(data.filtered.by.target.and.attack, weapon.type)
+    return(data.filtered.by.target.and.attack.and.weapon)
+    })
   
   #for regions that aren't included in default plotly scopes
   getLatAndLong <- reactive({
@@ -173,11 +206,8 @@ shinyServer(function(input, output) {
   
   #code for checking the number of rows in the filtered data
   output$text <- renderText({
-    coords <- getLatAndLong()
-    coords$lon.min
-    coords$lon.max
-    coords$lat.min
-    coords$lat.max
+    target.type <- input$TargetTypeMap
+    target.type
   })
   
   # code for rendering time series
