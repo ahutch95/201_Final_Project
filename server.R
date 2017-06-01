@@ -171,13 +171,14 @@ shinyServer(function(input, output) {
       distinct(attacktype1_txt, count)
     
     a <- plot_ly(attack.data, labels = ~attacktype1_txt, values = ~count, type = 'pie', textposition = 'outside',
-            textinfo = 'label+percent', insidetextfont = list(color = '#FFFFFF'),
-            text = ~paste0(count),
+            textinfo = 'text', insidetextfont = list(color = '#FFFFFF'),
+            hoverinfo = 'percent',
+            text = ~paste(attacktype1_txt, 'Count:', count),
             marker = list(colors = colors,
                           line = list(color = '#FFFFFF', width = 1)),
             #The 'pull' attribute can also be used to create space between the sectors
             showlegend = FALSE) %>%
-      layout(title = 'Attack Types breakdown',
+      layout(title = 'Attack Types Breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
              yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
              margin = list(b = 400))
@@ -191,15 +192,16 @@ shinyServer(function(input, output) {
     
     t <-plot_ly(target.data, labels = ~targtype1_txt, values = ~count, type = 'pie', textposition = 'outside',
                  textinfo = 'text', insidetextfont = list(color = '#FFFFFF'),
-                 hoverinfo = ~count,
-                 text = ~paste(targtype1_txt, count),
+                 hoverinfo = 'percent',
+                 text = ~paste(targtype1_txt, 'Count:', count),
                  marker = list(colors = colors,
                                line = list(color = '#FFFFFF', width = 1)),
                  #The 'pull' attribute can also be used to create space between the sectors
                  showlegend = FALSE) %>%
-      layout(title = 'Target Types breakdown',
+      layout(title = 'Target Types Breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             margin = list(b=200)) #changing the margin doesnt seem to be doing anything useful, but it should...
     
 
     weapon.data <- chart.data %>%
@@ -209,13 +211,14 @@ shinyServer(function(input, output) {
       distinct(weaptype1_txt, count)
     
     w <- plot_ly(weapon.data, labels = ~weaptype1_txt, values = ~count, type = 'pie', textposition = 'outside',
-                 textinfo = 'label+percent', insidetextfont = list(color = '#FFFFFF'),
-                 hoverinfo = 'text',
+                 textinfo = 'text', insidetextfont = list(color = '#FFFFFF'),
+                 hoverinfo = 'percent',
+                 text = ~paste(weaptype1_txt, 'Count:', count),
                  marker = list(colors = colors,
                                line = list(color = '#FFFFFF', width = 1)),
                  #The 'pull' attribute can also be used to create space between the sectors
                  showlegend = FALSE) %>%
-      layout(title = 'Weapon Types breakdown',
+      layout(title = 'Weapon Types Breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
              yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
              margin = list(b = 600))
@@ -232,11 +235,9 @@ shinyServer(function(input, output) {
       plot <- w
     }
     plot
+    
   })
-  
-  output$pies.count <-
-  
-  
+
   #code for checking the number of rows in the filtered data
   # output$text <- renderText({
   #   target.type <- input$TargetTypeMap
