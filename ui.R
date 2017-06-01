@@ -86,7 +86,6 @@ shinyUI(navbarPage('Terrorism over Time',
                               # Create a main panel, to display plotly pie
                               mainPanel(
                                 plotlyOutput('pies'),
-                                
                                 h2("About this visualization"),
                                 h3("Terrorist Activity Type Breakdown"),
                                 p("Selecting a range of years will show the breakdown of terrorist activity for the selected years. Changing the type will show different pie charts for breakdowns by target type, attack type or weapon type. "),
