@@ -56,7 +56,8 @@ shinyUI(navbarPage('Terrorism over Time',
                                 p("Selecting a range of years will show the map of terrorist activity for the selected years. Changing the type will show different points on the map for target type, attack type or weapon type. Selecting different regions will change the underlying map that is displayed"),
                                 p("This chart can be used to answer various questions about the locations of terrorist activity, including the following:"),
                                 HTML("<ul><li>How does the severity of terrorist activity relate to their location?</li>",
-                                     "<li>Does it look like terrorist activity are concentrated around government centers, civilian areas or other?</li></ul><br /><br />")
+                                     "<li>Does it look like terrorist activity are concentrated around government centers, civilian areas or other?</li>",
+                                     "<li>Does the type of attack or weapon relate to geography in any way?</li></ul><br /><br />")
                               )
                             )
                    ), 
@@ -131,7 +132,7 @@ shinyUI(navbarPage('Terrorism over Time',
                                 p("Selecting a range of years will show the total number of events for each year in the selected range. Selecting only a single year will show the date for each individual event in that year and the combined number of people killed and wounded in that event."),
                                 p("This chart can be used to answer various questions about the level of terrorist activity over time, including the following:"),
                                 HTML("<ul><li>How has the rate of terrorist activity changed over time in across the world? In specific regions?</li>",
-                                     "<li>Which years were especially violent for specific regions?</li></ul>",
+                                     "<li>Which years were especially violent for specific regions?</li>",
                                      "<li>What kinds of weapons were used most in earlier years and how has this changed over time?</li>",
                                      "<li>Are there any trends in target type in a single year for any or all regions?</li></ul><br /><br />"
                                 )
