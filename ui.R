@@ -54,8 +54,9 @@ shinyUI(navbarPage('Terrorism over Time',
                                 h3("Terrorist Activity Map"),
                                 p("This map shows the locations of recorded terrorist activity and the size of points is determined by the number of people killed"),
                                 p("Selecting a range of years will show the map of terrorist activity for the selected years. Changing the type will show different points on the map for target type, attack type or weapon type. Selecting different regions will change the underlying map that is displayed"),
-                                p("How does the severity of terrorist activity relate to their location?"),
-                                p("Does it look like terrorist activity are concentrated around government centers, civilian areas or other?")
+                                p("This chart can be used to answer various questions about the locations of terrorist activity, including the following:"),
+                                HTML("<ul><li>How does the severity of terrorist activity relate to their location?</li>",
+                                     "<li>Does it look like terrorist activity are concentrated around government centers, civilian areas or other?</li></ul><br /><br />")
                               )
                             )
                    ), 
@@ -89,8 +90,9 @@ shinyUI(navbarPage('Terrorism over Time',
                                 h2("About this visualization"),
                                 h3("Terrorist Activity Type Breakdown"),
                                 p("Selecting a range of years will show the breakdown of terrorist activity for the selected years. Changing the type will show different pie charts for breakdowns by target type, attack type or weapon type. "),
-                                p("What targets are being targeted most frequently? government facilities, commercial centers, living spaces? Does this make it seem like terrorist attacks are personally, politically or economically motivated?"),
-                                p("What types of weapons or attacks are used most frequently? Has this changed over time? Does this suggest that terrorist activities are well organized or not?")
+                                p("This chart can be used to answer various questions about the breakdown of types of terrorist activity, including the following:"),
+                                HTML("<ul><li>What targets are being targeted most frequently? Government facilities, commercial centers, living spaces? Does this make it seem like terrorist attacks are personally, politically or economically motivated?</li>",
+                                     "<li>What types of weapons or attacks are used most frequently? Has this changed over time? Does this suggest that terrorist activities are well organized or not?</li></ul><br /><br />")
                               )
                             )
                    ),
@@ -129,10 +131,10 @@ shinyUI(navbarPage('Terrorism over Time',
                                 h3("Time Series Chart"),
                                 p("Selecting a range of years will show the total number of events for each year in the selected range. Selecting only a single year will show the date for each individual event in that year and the combined number of people killed and wounded in that event."),
                                 p("This chart can be used to answer various questions about the level of terrorist activity over time, including the following:"),
-                                HTML("<ul'><li>How has the rate of terrorist activity changed over time in across the world? In specific regions?</li>",
-                                     "</h4><li>Which years were especially violent for specific regions?</li></ul>",
-                                     "</h4><li>What kinds of weapons were used most in earlier years and how has this changed over time?</li>",
-                                     "</h4><li>Are there any trends in target type in a single year for any or all regions?</li></ul><br /><br />"
+                                HTML("<ul><li>How has the rate of terrorist activity changed over time in across the world? In specific regions?</li>",
+                                     "<li>Which years were especially violent for specific regions?</li></ul>",
+                                     "<li>What kinds of weapons were used most in earlier years and how has this changed over time?</li>",
+                                     "<li>Are there any trends in target type in a single year for any or all regions?</li></ul><br /><br />"
                                 )
                               )
                             )
