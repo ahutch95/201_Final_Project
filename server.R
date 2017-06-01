@@ -11,18 +11,18 @@ source(file = './BuildTimeSeries.R')
 shinyServer(function(input, output) { 
   
   #read in data
-  aus <- read.csv("./data/data.Australasia.Oceania.csv", stringsAsFactors = FALSE)
-  central.america <- read.csv("./data/data.Central.America.csv", stringsAsFactors = FALSE)
-  central.asia <- read.csv("./data/data.Central.Asia.csv", stringsAsFactors = FALSE)
-  east.asia <- read.csv("./data/data.East.Asia.csv", stringsAsFactors = FALSE)
-  east.europe <- read.csv("./data/data.Eastern.Europe.csv", stringsAsFactors = FALSE)
-  middle.east <- read.csv("./data/data.Middle.East.North.Africa.csv", stringsAsFactors = FALSE)
-  north.america <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE)
-  south.america <- read.csv("./data/data.South.America.csv", stringsAsFactors = FALSE)
-  south.asia <- read.csv("./data/data.South.Asia.csv", stringsAsFactors = FALSE)
-  southeast.asia <- read.csv("./data/data.Southeast.Asia.csv", stringsAsFactors = FALSE)
-  africa <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE)
-  western.europe <- data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE)
+  aus <- read.csv("./data/data.Australasia.Oceania.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  central.america <- read.csv("./data/data.Central.America.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  central.asia <- read.csv("./data/data.Central.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  east.asia <- read.csv("./data/data.East.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  east.europe <- read.csv("./data/data.Eastern.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  middle.east <- read.csv("./data/data.Middle.East.North.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  north.america <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  south.america <- read.csv("./data/data.South.America.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  south.asia <- read.csv("./data/data.South.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  southeast.asia <- read.csv("./data/data.Southeast.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  africa <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  western.europe <- data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
   
   filteredByTarget <- function(data, target.type){
     if (target.type == 'All') {
