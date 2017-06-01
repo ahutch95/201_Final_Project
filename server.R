@@ -4,7 +4,7 @@ library(plotly)
 
 # Set working directory
 
-# Read in data
+# File for creating time scatterplot
 source(file = './BuildTimeSeries.R')
 
 # Start shinyServer

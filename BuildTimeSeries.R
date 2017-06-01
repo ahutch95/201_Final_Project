@@ -26,16 +26,16 @@ BuildTimeSeries <- function(data, region, year1, year2, target.type, attack.type
       summarize(nattacks = n())
     
     plot <- plot_ly(data=prepped.data, type = 'scatter',
-                      x = ~iyear,
-                      y = ~nattacks,
-                      mode='markers',
-                      marker = list(
-                        opacity = .4,
-                        size = 10
-                      )) %>%
-      layout(title = 'Attacks Per Year',
+                    x = ~iyear,
+                    y = ~nattacks,
+                    mode='markers',
+                    marker = list(
+                      opacity = .4,
+                      size = 10
+                    )) %>%
+      layout(title = 'Total Instances of Terrorist Activitiy Per Year',
             xaxis = list(title = 'Year'),
-            yaxis = list(title = 'Total Attacks')
+            yaxis = list(title = 'Total Instances')
       )
   } 
   
@@ -46,7 +46,8 @@ BuildTimeSeries <- function(data, region, year1, year2, target.type, attack.type
       mutate(date = paste0(imonth, '/', iday, '/', iyear), 
              impact = nkill + nwound)
     
-    plot <- plot_ly(data=prepped.data, type = 'scatter',
+    plot <- plot_ly(source = "source",
+                    data=prepped.data, type = 'scatter',
                     x = ~date,
                     y = ~impact,
                     mode='markers',
@@ -55,11 +56,11 @@ BuildTimeSeries <- function(data, region, year1, year2, target.type, attack.type
                       size = 10
                     ),
                     hoverinfo = 'text',
-                    text = ~paste0(city, ', ', provstate, '<br />', date)) %>%
-      layout(title = 'Attack Impact (Combined Deaths and Injuries)',
+                    text = ~paste0(city, ', ', provstate, '<br />', date, '<br /> People killed:', nkill, '<br /> People injured', nwound)) %>%
+      layout(title = 'Impact of Terrorist Activity for Given Year',
              margin = list(t = 100, b = 100),
              xaxis = list(title = 'Date', tickangle = 90),
-             yaxis = list(title = 'Impact')
+             yaxis = list(title = 'Total Combined Deaths and Injuries')
       )
   }
   
