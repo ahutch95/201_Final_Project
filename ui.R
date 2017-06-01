@@ -3,6 +3,24 @@ library(shiny)
 library(plotly)
 
 shinyUI(navbarPage('Terrorism over Time',
+                   # tab for homepage
+                   tabPanel('About',
+                            titlePanel('About This Project'),
+                            sidebarLayout(
+                              sidebarPanel(
+                                h3('Created By'),
+                                h4('Alyssa Holzer, Austin Hutchinson, Jake Therrien, and Lee Polla'),
+                                h3('Data Citation'),
+                                p('National Consortium for the Study of Terrorism and Responses to Terrorism (START). (2016). Global Terrorism Database [Data file]. Retrieved from https://www.start.umd.edu/gtd')
+                              ),
+                              mainPanel(
+                                h2('Introduction'),
+                                p('The Global Terrorism Database (GTD) is an open-source database including information on terrorist events around the world since 1970 (our project looks specifically at 2000-2015). Unlike many other event databases, the GTD includes systematic data on international as well as domestic terrorist incidents that have occurred during this time period and now includes over 113,000 cases. For each GTD incident, information is available on the date and location of the incident, the weapons used and nature of the target, the number of casualties, and -- when identifiable -- the identity of the perpetrator.'),
+                                h2('Disclaimer'),
+                                p('The purpose of this project is to provide an exploratory tool for learning about trends in terrorism. This project is not meant to give a characterization of any particular terrorists or extremist groups. The GTD defines terrorism as: &quot;The threatened or actual use of illegal force and violence by a non-state actor to attain a political, economic, religious, or social goal through fear, coercion, or intimidation.&quot; Characterizing all terrorist activity as an &apos;attack&apos; can also be problematic, because this characterizes terrorists as enemies or evil, which rhetorically excludes the possibility that terrorists may have a legitimate reason to use illegal force. Additionally, the GTD was built using data from highly publicized news articles, so it might be the case that some terrorist activities are excluded or wrongfully included because of how the media chooses to represent the event.')
+                              )
+                            )
+                   ),
                    # tab panel for a map
                    tabPanel('Map',
                             titlePanel('Map of Attacks'),
@@ -94,8 +112,11 @@ shinyUI(navbarPage('Terrorism over Time',
                               
                               # Create a main panel, to display plotly Scatter plot
                               mainPanel(
-                                plotlyOutput('time')
-                                
+                                plotlyOutput('time'),
+                                textOutput('summary'),
+                                h2("About this visualization"),
+                                h3("Time Range"),
+                                p("Selecting a range of years will show the total number of attacks for each year in the selected range. Selecting only a single year will show the date for each individual event in that year and the combined number of people killed and wounded in that attack.")
                               )
                             )
                    )
