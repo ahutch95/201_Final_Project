@@ -85,6 +85,30 @@ shinyServer(function(input, output) {
            "Middle East/North Africa" = coords <- data.frame("lon.min" = c(-15), "lon.max" = c(75), "lat.min" = c(0), "lat.max" = c(75)))
   })
   
+  getPieData <- reactive({
+    switch(input$RegionPie,
+           "All" = type.data <- rbind(aus, central.america, central.asia, east.asia, east.europe, middle.east, 
+                                 north.america, south.america, south.asia, southeast.asia, africa, western.europe) %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "Australasia/Oceania" = type.data <- aus %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "Central America" = type.data <- central.america %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "Central Asia" = type.data <- central.asia %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "East Asia" = type.data <- east.asia %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "Eastern Europe" = type.data <- east.europe %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "Middle East/North Africa" = type.data <- middle.east %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "North America" = type.data <- north.america %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "South America" = type.data <- south.america %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "South Asia" = type.data <- south.asia %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "Southeast Asia" = type.data <- southeast.asia %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "Sub-Saharan Africa" = type.data <- africa %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]),
+           "Western Europe" = type.data <- western.europe %>% filter(iyear >= input$YearsPie[1] & iyear <= input$YearsPie[2]))
+    switch(input$TypePie,
+           "Target Type" = type.data <- filteredByTarget(data, "All"),
+           "Attack Type" = type.data <- filteredByAttack(data, "All"),
+           "Weapon Type" = type.data <- filteredByWeapon(data, "All"))
+    return(type.data)
+    
+  })
+  
   output$map <- renderPlotly({
     map.data <- datasetInput()
     region <- input$RegionMap
@@ -132,8 +156,15 @@ shinyServer(function(input, output) {
   })
   
   output$pies <- renderPlotly({
-    chart.data <- datasetInput()
-    attack.data <- data %>%
+    
+    region <- input$RegionPie
+    years <- input$YearsPie
+    type <- input$TypePie
+    chart.data <- getPieData()
+    
+    
+    
+    attack.data <- chart.data %>%
       select(attacktype1_txt) %>%
       group_by(attacktype1_txt) %>%
       mutate(count = n()) %>%
@@ -141,37 +172,37 @@ shinyServer(function(input, output) {
     
     a <- plot_ly(attack.data, labels = ~attacktype1_txt, values = ~count, type = 'pie', textposition = 'outside',
             textinfo = 'label+percent', insidetextfont = list(color = '#FFFFFF'),
-            hoverinfo = 'text',
-            text = ~paste(attacktype1_txt, count),
+            text = ~paste0(count),
             marker = list(colors = colors,
                           line = list(color = '#FFFFFF', width = 1)),
             #The 'pull' attribute can also be used to create space between the sectors
             showlegend = FALSE) %>%
       layout(title = 'Attack Types breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             margin = list(b = 400))
     
 
-    target.data <- data %>%
+    target.data <- chart.data %>%
       select(targtype1_txt) %>%
       group_by(targtype1_txt) %>%
       mutate(count = n()) %>%
       distinct(targtype1_txt, count)
     
-    t <- plot_ly(target.data, labels = ~targtype1_txt, values = ~count, type = 'pie', textposition = 'outside',
+    t <-plot_ly(target.data, labels = ~targtype1_txt, values = ~count, type = 'pie', textposition = 'outside',
                  textinfo = 'label+percent', insidetextfont = list(color = '#FFFFFF'),
-                 hoverinfo = 'text',
-                 text = ~paste(targtype1_txt, count),
+                 hoverinfo = ~count,
                  marker = list(colors = colors,
                                line = list(color = '#FFFFFF', width = 1)),
                  #The 'pull' attribute can also be used to create space between the sectors
                  showlegend = FALSE) %>%
       layout(title = 'Target Types breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             margin = list(b = 600))
     
 
-    weapon.data <- data %>%
+    weapon.data <- chart.data %>%
       select(weaptype1_txt) %>%
       group_by(weaptype1_txt) %>%
       mutate(count = n()) %>%
@@ -180,16 +211,16 @@ shinyServer(function(input, output) {
     w <- plot_ly(weapon.data, labels = ~weaptype1_txt, values = ~count, type = 'pie', textposition = 'outside',
                  textinfo = 'label+percent', insidetextfont = list(color = '#FFFFFF'),
                  hoverinfo = 'text',
-                 text = ~paste(weaptype1_txt, count),
                  marker = list(colors = colors,
                                line = list(color = '#FFFFFF', width = 1)),
                  #The 'pull' attribute can also be used to create space between the sectors
                  showlegend = FALSE) %>%
       layout(title = 'Weapon Types breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             margin = list(b = 600))
     
-    category = input$Type
+    category = input$TypePie
     plot <- t
     if (category == "Attack") {
       plot <- a

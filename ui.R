@@ -73,8 +73,8 @@ shinyUI(navbarPage('Terrorism over Time',
                                 sliderInput("YearsPie", label = h3("Time Range"), sep = "", min = 2000, 
                                             max = 2015, value = c(2000, 2015)),
                                 selectInput("TypePie", label = h3("Select based on Attack Type, Target, or Weapon Type"), 
-                                            choices = list( "None", "Target Type", "Attack Type", "Weapon Type"), 
-                                            selected = "None")
+                                            choices = list("Target", "Attack", "Weapon"), 
+                                            selected = "Target")
                               ),
                               
                               # Create a main panel, to display plotly pie
