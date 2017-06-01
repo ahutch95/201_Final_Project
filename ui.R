@@ -126,8 +126,14 @@ shinyUI(navbarPage('Terrorism over Time',
                                 plotlyOutput('time'),
                                 textOutput('summary'),
                                 h2("About this visualization"),
-                                h3("Time Range"),
-                                p("Selecting a range of years will show the total number of events for each year in the selected range. Selecting only a single year will show the date for each individual event in that year and the combined number of people killed and wounded in that event.")
+                                h3("Time Series Chart"),
+                                p("Selecting a range of years will show the total number of events for each year in the selected range. Selecting only a single year will show the date for each individual event in that year and the combined number of people killed and wounded in that event."),
+                                p("This chart can be used to answer various questions about the level of terrorist activity over time, including the following:"),
+                                HTML("<ul'><li>How has the rate of terrorist activity changed over time in across the world? In specific regions?</li>",
+                                     "</h4><li>Which years were especially violent for specific regions?</li></ul>",
+                                     "</h4><li>What kinds of weapons were used most in earlier years and how has this changed over time?</li>",
+                                     "</h4><li>Are there any trends in target type in a single year for any or all regions?</li></ul><br /><br />"
+                                )
                               )
                             )
                    )
