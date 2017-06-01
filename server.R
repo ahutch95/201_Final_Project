@@ -152,7 +152,7 @@ shinyServer(function(input, output) {
         countrycolor = toRGB("white")
       )
     }
-    plot_ly(map.data, lat = map.data$latitude, lon = map.data$longitude, type = 'scattergeo', mode = 'markers', color = ~nkill, marker = list(opacity = 0.5, size = 15), colors = 'Set1', text = paste0(map.data$city, ", ", map.data$provstate, ", ", map.data$country_txt, "<br />Number of Deaths: ", map.data$nkill, "<br />Number of Injuries: ", map.data$nwound), hoverinfo = "text") %>% layout(geo = g)
+  plot_ly(map.data, lat = map.data$latitude, lon = map.data$longitude, type = 'scattergeo', mode = 'markers', color = ~nkill, marker = list(opacity = 0.5, size = 15, colorbar = list(title = "Number Killed")), colors = 'Set1', text = paste0(map.data$city, ", ", map.data$provstate, ", ", map.data$country_txt, "<br />Number of Deaths: ", map.data$nkill, "<br />Number of Injuries: ", map.data$nwound), hoverinfo = "text") %>% layout(geo = g)
   })
   
   output$pies <- renderPlotly({

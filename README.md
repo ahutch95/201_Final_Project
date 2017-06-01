@@ -1,4 +1,4 @@
-# 201_Final_Project
+﻿# 201_Final_Project
 
 # Project Description
 
@@ -8,7 +8,7 @@ For our audience who is unfamiliar with these ideas, we want to illustrate how c
 
 Questions
 * How did terrorism change after the 2003 invasion of Iraq?
-* How many terrorist attacks targeted government and other public officials in Chile and other latin American countries during the 1970s? How did the type of weapon change before and after events in the 1970s?(The U.S. funded and trained many of these groups)
+* How many terrorist attacks targeted government and other public officials in Chile and other latin American countries during the 2000s? How did the type of weapon change before and after events in the 2000s?(The U.S. funded and trained many of these groups)
 * How did the rate and level of terrorism change throughout the decades?
 
 
