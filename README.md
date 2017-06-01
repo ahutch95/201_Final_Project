@@ -21,5 +21,5 @@ Questions
 * Many of our questions about the data will be answered by comparing analytics on subgroups to the averages of the outgroups or the data as a whole.
 * We anticipate having to read through a lot of the event descriptions before we can figure out an effective way to filter for the events we want. It will also require some effort to do research on political timelines from other sources to correlate events effectively.
 
-#Note
+# Note
 There may be an error in the file encoding when loading the datasets on Windows. Some machines might not be able to load the dataset depending on the choice of file encoding
