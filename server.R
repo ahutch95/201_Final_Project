@@ -190,16 +190,16 @@ shinyServer(function(input, output) {
       distinct(targtype1_txt, count)
     
     t <-plot_ly(target.data, labels = ~targtype1_txt, values = ~count, type = 'pie', textposition = 'outside',
-                 textinfo = 'label+percent', insidetextfont = list(color = '#FFFFFF'),
+                 textinfo = 'text', insidetextfont = list(color = '#FFFFFF'),
                  hoverinfo = ~count,
+                 text = ~paste(targtype1_txt, count),
                  marker = list(colors = colors,
                                line = list(color = '#FFFFFF', width = 1)),
                  #The 'pull' attribute can also be used to create space between the sectors
                  showlegend = FALSE) %>%
       layout(title = 'Target Types breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-             margin = list(b = 600))
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
     
 
     weapon.data <- chart.data %>%
@@ -233,6 +233,8 @@ shinyServer(function(input, output) {
     }
     plot
   })
+  
+  output$pies.count <-
   
   
   #code for checking the number of rows in the filtered data

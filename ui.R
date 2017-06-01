@@ -49,8 +49,13 @@ shinyUI(navbarPage('Terrorism over Time',
                               
                               # Main panel: display plotly map
                               mainPanel(
-                                plotlyOutput('map')
-                                #textOutput("text")
+                                plotlyOutput('map'),
+                                h2("About this visualization"),
+                                h3("Terrorist Activity Map"),
+                                p("This map shows the locations of recorded terrorist activity and the size of points is determined by the number of people killed"),
+                                p("Selecting a range of years will show the map of terrorist activity for the selected years. Changing the type will show different points on the map for target type, attack type or weapon type. Selecting different regions will change the underlying map that is displayed"),
+                                p("How does the severity of terrorist activity relate to their location?"),
+                                p("Does it look like terrorist activity are concentrated around government centers, civilian areas or other?")
                               )
                             )
                    ), 
@@ -79,7 +84,13 @@ shinyUI(navbarPage('Terrorism over Time',
                               
                               # Create a main panel, to display plotly pie
                               mainPanel(
-                                plotlyOutput('pies')
+                                plotlyOutput('pies'),
+                                
+                                h2("About this visualization"),
+                                h3("Terrorist Activity Type Breakdown"),
+                                p("Selecting a range of years will show the breakdown of terrorist activity for the selected years. Changing the type will show different pie charts for breakdowns by target type, attack type or weapon type. "),
+                                p("What targets are being targeted most frequently? government facilities, commercial centers, living spaces? Does this make it seem like terrorist attacks are personally, politically or economically motivated?"),
+                                p("What types of weapons or attacks are used most frequently? Has this changed over time? Does this suggest that terrorist activities are well organized or not?")
                               )
                             )
                    ),
@@ -116,7 +127,7 @@ shinyUI(navbarPage('Terrorism over Time',
                                 textOutput('summary'),
                                 h2("About this visualization"),
                                 h3("Time Range"),
-                                p("Selecting a range of years will show the total number of attacks for each year in the selected range. Selecting only a single year will show the date for each individual event in that year and the combined number of people killed and wounded in that attack.")
+                                p("Selecting a range of years will show the total number of events for each year in the selected range. Selecting only a single year will show the date for each individual event in that year and the combined number of people killed and wounded in that event.")
                               )
                             )
                    )
