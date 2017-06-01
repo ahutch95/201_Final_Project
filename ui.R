@@ -49,8 +49,8 @@ shinyUI(navbarPage('Terrorism over Time',
                               
                               # Main panel: display plotly map
                               mainPanel(
-                                plotlyOutput('map'),
-                                textOutput("text")
+                                plotlyOutput('map')
+                                #textOutput("text")
                               )
                             )
                    ), 

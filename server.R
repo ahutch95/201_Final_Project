@@ -111,7 +111,7 @@ shinyServer(function(input, output) {
         lataxis = list(
           range = c(coords$lat.min, coords$lat.max)),
         showland = TRUE,
-        landcolor = toRGB("black"),
+        landcolor = toRGB("white"),
         subunitwidth = 1,
         countrywidth = 1,
         subunitcolor = toRGB("white"),
@@ -121,14 +121,14 @@ shinyServer(function(input, output) {
       g <- list(
         scope = scope,
         showland = TRUE,
-        landcolor = toRGB("black"),
+        landcolor = toRGB("white"),
         subunitwidth = 1,
         countrywidth = 1,
         subunitcolor = toRGB("white"),
         countrycolor = toRGB("white")
       )
     }
-    plot_ly(map.data, lat = map.data$latitude, lon = map.data$longitude, type = 'scattergeo', mode = 'markers', marker = list(color = ~nkill, showscale = TRUE), text = paste0(map.data$city, ", ", map.data$provstate, ", ", map.data$country_txt, "<br />Number of Deaths: ", map.data$nkill, "<br />Number of Injuries: ", map.data$nwound), hoverinfo = "text") %>% layout(geo = g)
+    plot_ly(map.data, lat = map.data$latitude, lon = map.data$longitude, type = 'scattergeo', mode = 'markers', color = ~nkill, marker = list(opacity = 0.5, size = 15), colors = 'Set1', text = paste0(map.data$city, ", ", map.data$provstate, ", ", map.data$country_txt, "<br />Number of Deaths: ", map.data$nkill, "<br />Number of Injuries: ", map.data$nwound), hoverinfo = "text") %>% layout(geo = g)
   })
   
   output$pies <- renderPlotly({
@@ -205,10 +205,10 @@ shinyServer(function(input, output) {
   
   
   #code for checking the number of rows in the filtered data
-  output$text <- renderText({
-    target.type <- input$TargetTypeMap
-    target.type
-  })
+  # output$text <- renderText({
+  #   target.type <- input$TargetTypeMap
+  #   target.type
+  # })
   
   # code for rendering time series
   
