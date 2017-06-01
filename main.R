@@ -4,7 +4,7 @@ library(dplyr)
 
 getwd()
 setwd("../final")
-data <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE)
+data <- read.csv("./data/globalterrorismdb_0616dist.csv", stringsAsFactors = FALSE, encoding = "latin1")
 View(data)
 
 data.North.America <- data %>% filter(region == 1)
@@ -32,3 +32,4 @@ write.csv(data.Eastern.Europe, "data/data.Eastern.Europe.csv")
 write.csv(data.Middle.East.North.Africa, "data/data.Middle.East.North.Africa.csv")
 write.csv(data.Sub.Africa, "data/data.Sub.Africa.csv")
 write.csv(data.Australasia.Oceania, "data/data.Australasia.Oceania.csv")
+
