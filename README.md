@@ -2,7 +2,7 @@
 
 # Project Description
 
-In this project, we plan to utilize the START Consortium’s Global Terrorism Database. This dataset contains data that was collected over the years of 1970-2015 by the National Consortium for the Study of Terrorism and Responses to Terrorism led by the University of Maryland. Found on Kaggle.com, this dataset provides statistics on known acts of terrorism around the world. We believe that this data will be most used by those researching terrorism and those in the counter-terrorism field. With the appropriate analysis we hope to find a deeper understanding of terrorism and its impact on citizens. 
+In this project, we plan to utilize the START Consortiumâ€™s Global Terrorism Database. This dataset contains data that was collected over the years of 1970-2015 by the National Consortium for the Study of Terrorism and Responses to Terrorism led by the University of Maryland. Found on Kaggle.com, this dataset provides statistics on known acts of terrorism around the world. We believe that this data will be most used by those researching terrorism and those in the counter-terrorism field. With the appropriate analysis we hope to find a deeper understanding of terrorism and its impact on citizens. 
 
 For our audience who is unfamiliar with these ideas, we want to illustrate how changes in terrorism can be related to other types of political events. In order to answer these questions, we will employ maps as well as various charts and graphs to help clearly illustrate our findings. 
 
@@ -20,3 +20,6 @@ Questions
 * All of the libraries we will be using in this project to manipulate the data and create our html page have been covered previously in this course.
 * Many of our questions about the data will be answered by comparing analytics on subgroups to the averages of the outgroups or the data as a whole.
 * We anticipate having to read through a lot of the event descriptions before we can figure out an effective way to filter for the events we want. It will also require some effort to do research on political timelines from other sources to correlate events effectively.
+
+#Note
+There may be an error in the file encoding when loading the datasets on Windows. Some machines might not be able to load the dataset depending on the choice of file encoding
