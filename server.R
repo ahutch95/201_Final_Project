@@ -11,18 +11,18 @@ source(file = './BuildTimeSeries.R')
 shinyServer(function(input, output) { 
   
   #read in data
-  aus <- read.csv("./data/data.Australasia.Oceania.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  central.america <- read.csv("./data/data.Central.America.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  central.asia <- read.csv("./data/data.Central.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  east.asia <- read.csv("./data/data.East.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  east.europe <- read.csv("./data/data.Eastern.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  middle.east <- read.csv("./data/data.Middle.East.North.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  north.america <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  south.america <- read.csv("./data/data.South.America.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  south.asia <- read.csv("./data/data.South.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  southeast.asia <- read.csv("./data/data.Southeast.Asia.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  africa <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
-  western.europe <- data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
+  aus <- read.csv("./data/data.Australasia.Oceania.csv", stringsAsFactors = FALSE)
+  central.america <- read.csv("./data/data.Central.America.csv", stringsAsFactors = FALSE)
+  central.asia <- read.csv("./data/data.Central.Asia.csv", stringsAsFactors = FALSE)
+  east.asia <- read.csv("./data/data.East.Asia.csv", stringsAsFactors = FALSE)
+  east.europe <- read.csv("./data/data.Eastern.Europe.csv", stringsAsFactors = FALSE)
+  middle.east <- read.csv("./data/data.Middle.East.North.Africa.csv", stringsAsFactors = FALSE)
+  north.america <- read.csv("./data/data.North.America.csv", stringsAsFactors = FALSE)
+  south.america <- read.csv("./data/data.South.America.csv", stringsAsFactors = FALSE)
+  south.asia <- read.csv("./data/data.South.Asia.csv", stringsAsFactors = FALSE)
+  southeast.asia <- read.csv("./data/data.Southeast.Asia.csv", stringsAsFactors = FALSE)
+  africa <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE)
+  western.europe <- data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE)
   
   filteredByTarget <- function(data, target.type){
     if (target.type == 'All') {
@@ -164,6 +164,8 @@ shinyServer(function(input, output) {
     ) %>% layout(geo = g)
   })
   
+  
+  #Builds three plots at once for each breakdown, which makes it faster to switch between some pies
   output$pies <- renderPlotly({
     
     region <- input$RegionPie
@@ -171,8 +173,17 @@ shinyServer(function(input, output) {
     type <- input$TypePie
     chart.data <- getPieData()
     
+    #Attempt to set margins on pie plot so that text doesnt get cut off
+    margin.list <- list(
+      l = 50,
+      r = 50,
+      b = 0.1,
+      t = 100,
+      pad = 4
+    )
     
     
+    #Group data by attack type and get count
     attack.data <- chart.data %>%
       select(attacktype1_txt) %>%
       group_by(attacktype1_txt) %>%
@@ -184,15 +195,15 @@ shinyServer(function(input, output) {
             hoverinfo = 'percent',
             text = ~paste(attacktype1_txt, 'Count:', count),
             marker = list(colors = colors,
-                          line = list(color = '#FFFFFF', width = 1)),
-            #The 'pull' attribute can also be used to create space between the sectors
+            line = list(color = '#FFFFFF', width = 1)),
             showlegend = FALSE) %>%
       layout(title = 'Attack Types Breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
              yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-             margin = list(b = 400))
+             margin = margin.list
+      )
     
-
+    #Group data by target type and get count
     target.data <- chart.data %>%
       select(targtype1_txt) %>%
       group_by(targtype1_txt) %>%
@@ -204,15 +215,15 @@ shinyServer(function(input, output) {
                  hoverinfo = 'percent',
                  text = ~paste(targtype1_txt, 'Count:', count),
                  marker = list(colors = colors,
-                               line = list(color = '#FFFFFF', width = 1)),
-                 #The 'pull' attribute can also be used to create space between the sectors
+                 line = list(color = '#FFFFFF', width = 1)),
                  showlegend = FALSE) %>%
       layout(title = 'Target Types Breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
              yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-             margin = list(b=200)) #changing the margin doesnt seem to be doing anything useful, but it should...
+             margin = margin.list
+      ) #changing the margin doesnt seem to be doing anything useful, but it should...
     
-
+    #Group data by weapon type and get count
     weapon.data <- chart.data %>%
       select(weaptype1_txt) %>%
       group_by(weaptype1_txt) %>%
@@ -224,14 +235,15 @@ shinyServer(function(input, output) {
                  hoverinfo = 'percent',
                  text = ~paste(weaptype1_txt, 'Count:', count),
                  marker = list(colors = colors,
-                               line = list(color = '#FFFFFF', width = 1)),
-                 #The 'pull' attribute can also be used to create space between the sectors
+                line = list(color = '#FFFFFF', width = 1)),
                  showlegend = FALSE) %>%
       layout(title = 'Weapon Types Breakdown',
              xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
              yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-             margin = list(b = 600))
+             margin = margin.list
+      )
     
+    #Determines which pie is displayed
     category = input$TypePie
     plot <- t
     if (category == "Attack") {
