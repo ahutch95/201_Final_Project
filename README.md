@@ -22,4 +22,4 @@ Questions
 * We anticipate having to read through a lot of the event descriptions before we can figure out an effective way to filter for the events we want. It will also require some effort to do research on political timelines from other sources to correlate events effectively.
 
 # Note
-There may be an error in the file encoding when loading the datasets on Windows. Some machines might not be able to load the dataset depending on the choice of file encoding
+There may be an error in the file encoding when loading the datasets on Windows. Some machines might not be able to load the dataset depending on the choice of file encoding. We found that trying both "UTF-8" and "latin1" fileEncoding when reading the csv's was necessary sometimes in order to load the data properly. 

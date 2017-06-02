@@ -80,9 +80,17 @@ shinyServer(function(input, output) {
   getLatAndLong <- reactive({
     switch(input$RegionMap,
            "Australasia/Oceania" = coords <- data.frame("lon.min" = c(90), "lon.max" = c(180), "lat.min" = c(-60), "lat.max" = c(15)),
-           "Central America" = coords <- data.frame("lon.min" = c(-120), "lon.max" = c(-60), "lat.min" = c(0), "lat.max" = c(45)),
-           "Eastern Europe" = coords <- data.frame("lon.min" = c(0), "lon.max" = c(90), "lat.min" = c(30), "lat.max" = c(75)),
-           "Middle East/North Africa" = coords <- data.frame("lon.min" = c(-15), "lon.max" = c(75), "lat.min" = c(0), "lat.max" = c(75)))
+           "Central America" = coords <- data.frame("lon.min" = c(-120), "lon.max" = c(-45), "lat.min" = c(0), "lat.max" = c(45)),
+           "Eastern Europe" = coords <- data.frame("lon.min" = c(0), "lon.max" = c(90), "lat.min" = c(0), "lat.max" = c(75)),
+           "Middle East/North Africa" = coords <- data.frame("lon.min" = c(-15), "lon.max" = c(75), "lat.min" = c(0), "lat.max" = c(75)),
+           "East Asia" = coords <- data.frame("lon.min" = c(60), "lon.max" = c(150), "lat.min" = c(0), "lat.max" = c(60)),
+           "Central Asia" = coords <- data.frame("lon.min" = c(15), "lon.max" = c(105), "lat.min" = c(0), "lat.max" = c(90)),
+           "South Asia" = coords <- data.frame("lon.min" = c(45), "lon.max" = c(105), "lat.min" = c(0), "lat.max" = c(45)),
+           "Southeast Asia" = coords <- data.frame("lon.min" = c(75), "lon.max" = c(150), "lat.min" = c(-15), "lat.max" = c(45)),
+           "North America" = coords <- data.frame("lon.min" = c(-135), "lon.max" = c(-45), "lat.min" = c(0), "lat.max" = c(75)),
+           "South America" = coords <- data.frame("lon.min" = c(-90), "lon.max" = c(-30), "lat.min" = c(-60), "lat.max" = c(15)),
+           "Western Europe" = coords <- data.frame("lon.min" = c(-30), "lon.max" = c(60), "lat.min" = c(15), "lat.max" = c(75)),
+           "Sub-Saharan Africa" = coords <- data.frame("lon.min" = c(-30), "lon.max" = c(60), "lat.min" = c(-45), "lat.max" = c(45)))
   })
   
   getPieData <- reactive({
@@ -114,45 +122,46 @@ shinyServer(function(input, output) {
     region <- input$RegionMap
     years <- input$YearsMap
     type <- input$TypeMap
-    if (region == 'North America') {
-      scope <- 'north america'
-    } else if (region == 'South America') {
-      scope <- 'south america'
-    } else if (region == 'Central Asia' | region == 'South Asia' | region == 'Southeast Asia' | region == 'East Asia') {
-      scope <- 'asia'
-    } else if (region == 'Western Europe') {
-      scope <- 'europe'
-    } else if (region == 'Sub-Saharan Africa') {
-      scope <- 'africa'
-    } else {
-      scope <- 'world'
-    }
-    if (region == 'Australasia/Oceania' | region == 'Central America' | region == 'Eastern Europe' | region == 'Middle East/North Africa') {
-      coords <- getLatAndLong()
-      g <- list(
-        lonaxis = list(
-          range = c(coords$lon.min, coords$lon.max)),
-        lataxis = list(
-          range = c(coords$lat.min, coords$lat.max)),
-        showland = TRUE,
-        landcolor = toRGB("white"),
-        subunitwidth = 1,
-        countrywidth = 1,
-        subunitcolor = toRGB("white"),
-        countrycolor = toRGB("white")
-      )
-    } else {
-      g <- list(
-        scope = scope,
-        showland = TRUE,
-        landcolor = toRGB("white"),
-        subunitwidth = 1,
-        countrywidth = 1,
-        subunitcolor = toRGB("white"),
-        countrycolor = toRGB("white")
-      )
-    }
-  plot_ly(map.data, lat = map.data$latitude, lon = map.data$longitude, type = 'scattergeo', mode = 'markers', color = ~nkill, marker = list(opacity = 0.5, size = 15, colorbar = list(title = "Number Killed")), colors = 'Set1', text = paste0(map.data$city, ", ", map.data$provstate, ", ", map.data$country_txt, "<br />Number of Deaths: ", map.data$nkill, "<br />Number of Injuries: ", map.data$nwound), hoverinfo = "text") %>% layout(geo = g)
+    coords <- getLatAndLong()
+    g <- list(
+      lonaxis = list(range = c(coords$lon.min, coords$lon.max)),
+      lataxis = list(range = c(coords$lat.min, coords$lat.max)),
+      showland = TRUE,
+      showcountries = TRUE,
+      landcolor = "rgb(212, 212, 212)",
+      #landcolor = toRGB("white"),
+      subunitwidth = 1,
+      countrywidth = 1,
+      subunitcolor = toRGB("white"),
+      countrycolor = toRGB("white")
+    )
+    req(nrow(map.data) > 0)
+    plot_ly(
+      map.data,
+      lat = map.data$latitude,
+      lon = map.data$longitude,
+      type = 'scattergeo',
+      mode = 'markers',
+      color = ~ nkill,
+      marker = list(
+        opacity = 0.5,
+        size = 15,
+        colorbar = list(title = "Number Killed")
+      ),
+      colors = 'Paired',
+      text = paste0(
+        map.data$city,
+        ", ",
+        map.data$provstate,
+        ", ",
+        map.data$country_txt,
+        "<br />Number of Deaths: ",
+        map.data$nkill,
+        "<br />Number of Injuries: ",
+        map.data$nwound
+      ),
+      hoverinfo = "text"
+    ) %>% layout(geo = g)
   })
   
   output$pies <- renderPlotly({
