@@ -2,7 +2,7 @@
 library(shiny)
 library(plotly)
 
-shinyUI(navbarPage('Terrorism over Time',
+shinyUI(navbarPage('Terrorism Over Time',
                    # tab for homepage
                    tabPanel('About',
                             titlePanel('About This Project'),
@@ -141,7 +141,3 @@ shinyUI(navbarPage('Terrorism over Time',
                    )
                    
 ))
-
-#target type <- list("Business"=1,"Government"=2,"Police"=3,"Military"=4,"Abortion Related"=5, "Airports & Aircraft"=6, "Government(Diplomatic)"=7, "Educational Institution"=8, "Food or Water Supply"=9, "Journalist & Media"=10, "Maritime"=11, "NGO"=12, "Other"=13, "Private Citizens & Property"=14), 
-#attack type <- list("Assassination"=15, "Armed Assault"=16, "Bombing/Explosion"=17, "Hijacking"=18, "Hostage Taking (Barricade Incident)"=19, "Hostage Taking (Kidnapping)"=20, "Facility/Infrastructure Attack"=21, "Unarmed Assault"=22, "Unknown"=23), 
-#weapon type <- list("Biological"=24, "Chemical"=25, "Radiological"=26, "Nuclear"=27, "Firearms"=28, "Explosives/Bombs/Dynamite"=29, "Fake Weapons"=30, "Incendiary"=31, "Melee"=32, "Vehicle"=33, "Sabotage Equipment"=34, "Other"=35, "Unknown"=36)), 

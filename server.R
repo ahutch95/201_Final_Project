@@ -24,6 +24,7 @@ shinyServer(function(input, output) {
   africa <- read.csv("./data/data.Sub.Africa.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
   western.europe <- data <- read.csv("./data/data.Western.Europe.csv", stringsAsFactors = FALSE, fileEncoding = "latin1")
   
+  #helper function to filter the map data by target type
   filteredByTarget <- function(data, target.type){
     if (target.type == 'All') {
       return(data)
@@ -32,7 +33,8 @@ shinyServer(function(input, output) {
       return(filtered.data)
     }
   }
-    
+  
+  #helper function to filter the map data by attack type
   filteredByAttack <- function(data, attack.type){
     if (attack.type == 'All') {
       return(data)
@@ -42,6 +44,7 @@ shinyServer(function(input, output) {
     }
   }
     
+  #helper function to filter the map data by weapon type
   filteredByWeapon <- function(data, weapon.type){
     if (weapon.type == 'All') {
       return(data)
@@ -51,6 +54,7 @@ shinyServer(function(input, output) {
     }
   }
   
+  #reactive function to get the data for the map based on user inputs
   datasetInput <- reactive({
     attack.type <- input$AttackTypeMap
     target.type <- input$TargetTypeMap
@@ -76,8 +80,8 @@ shinyServer(function(input, output) {
     return(data.filtered.by.target.and.attack.and.weapon)
     })
   
-  #for regions that aren't included in default plotly scopes
-  getLatAndLong <- reactive({
+    #custom lat and longs for each of the regions, default plotly scopes were not specific enough
+    getLatAndLong <- reactive({
     switch(input$RegionMap,
            "Australasia/Oceania" = coords <- data.frame("lon.min" = c(90), "lon.max" = c(180), "lat.min" = c(-60), "lat.max" = c(15)),
            "Central America" = coords <- data.frame("lon.min" = c(-120), "lon.max" = c(-45), "lat.min" = c(0), "lat.max" = c(45)),
@@ -92,7 +96,58 @@ shinyServer(function(input, output) {
            "Western Europe" = coords <- data.frame("lon.min" = c(-30), "lon.max" = c(60), "lat.min" = c(15), "lat.max" = c(75)),
            "Sub-Saharan Africa" = coords <- data.frame("lon.min" = c(-30), "lon.max" = c(60), "lat.min" = c(-45), "lat.max" = c(45)))
   })
-  
+    
+    #output the map
+    output$map <- renderPlotly({
+      map.data <- datasetInput()
+      region <- input$RegionMap
+      years <- input$YearsMap
+      type <- input$TypeMap
+      coords <- getLatAndLong()
+      #specify the geometry for the map
+      g <- list(
+        lonaxis = list(range = c(coords$lon.min, coords$lon.max)),
+        lataxis = list(range = c(coords$lat.min, coords$lat.max)),
+        showland = TRUE,
+        showcountries = TRUE,
+        landcolor = "rgb(212, 212, 212)",
+        #landcolor = toRGB("white"),
+        subunitwidth = 1,
+        countrywidth = 1,
+        subunitcolor = toRGB("white"),
+        countrycolor = toRGB("white")
+      )
+      #require that there actually be data, otherwise don't show anything
+      req(nrow(map.data) > 0)
+      plot_ly(
+        map.data,
+        lat = map.data$latitude,
+        lon = map.data$longitude,
+        type = 'scattergeo',
+        mode = 'markers',
+        color = ~ nkill,
+        marker = list(
+          opacity = 0.5,
+          size = 15,
+          colorbar = list(title = "Number Killed")
+        ),
+        colors = 'Paired',
+        text = paste0(
+          map.data$city,
+          ", ",
+          map.data$provstate,
+          ", ",
+          map.data$country_txt,
+          "<br />Number of Deaths: ",
+          map.data$nkill,
+          "<br />Number of Injuries: ",
+          map.data$nwound
+        ),
+        hoverinfo = "text"
+      ) %>% layout(geo = g, title = 'Locations of Terrorist Activity')
+    })
+    
+  #get the data for the pie chart based on user inputs
   getPieData <- reactive({
     switch(input$RegionPie,
            "All" = type.data <- rbind(aus, central.america, central.asia, east.asia, east.europe, middle.east, 
@@ -117,6 +172,7 @@ shinyServer(function(input, output) {
     
   })
   
+  #output the map
   output$map <- renderPlotly({
     map.data <- datasetInput()
     region <- input$RegionMap
@@ -166,13 +222,13 @@ shinyServer(function(input, output) {
   
   
   #Builds three plots at once for each breakdown, which makes it faster to switch between some pies
+  #output the pie chart
   output$pies <- renderPlotly({
-    
     region <- input$RegionPie
     years <- input$YearsPie
     type <- input$TypePie
     chart.data <- getPieData()
-    
+
     #Attempt to set margins on pie plot so that text doesnt get cut off
     margin.list <- list(
       l = 50,
@@ -258,16 +314,8 @@ shinyServer(function(input, output) {
     plot
     
   })
-
-  #code for checking the number of rows in the filtered data
-  # output$text <- renderText({
-  #   target.type <- input$TargetTypeMap
-  #   target.type
-  # })
   
-  # code for rendering time series
-  
-  # get dataset based on region
+  # get dataset for the timeseries based on region
   datasetInputTime <- reactive({
     switch(input$RegionTime,
            "All" = data <- rbind(aus, central.america, central.asia, east.asia, east.europe, middle.east,
